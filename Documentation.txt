@@ -1,0 +1,93 @@
+How to send mail from localhost ubuntu
+
+https://myaccount.google.com/lesssecureapps
+https://accounts.google.com/DisplayUnlockCaptcha
+
+Step 1:
+At first make it on from the following link
+
+Allow less secure apps: ON
+By default it is Off
+
+
+Secondly, Allow access for "Display Unlock captch option" (Allow access to your Google account). Here is the link : https://accounts.google.com/DisplayUnlockCaptcha
+
+
+Step 2:
+
+
+Check your smtp port is working by the following command
+
+telnet localhost 25
+
+If it is working then the result would be like this
+
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+220 ahmad-Inspiron-5570 ESMTP Postfix (Ubuntu)
+
+
+if it is not working then it will show following message
+Trying 127.0.0.1...
+telnet: Unable to connect to remote host: Connection refused
+
+
+close this by following two commands 
+
+CTRL + ] 
+
+and then write close
+telnet> close 
+and enter
+
+
+
+var nodemailer = require('nodemailer');
+
+
+
+var transporter = nodemailer.createTransport({
+  service: 'Gmail',
+  host: 'smtp.gmail.com',
+  port: 25,
+  secure: false, // upgrade later with STARTTLS
+  tls: {
+          rejectUnauthorized: false
+      },
+  auth: {
+    user: "YourGmailAccount@gmail.com",
+    pass: "YourGmailAccountPassword.;"
+  }
+});
+
+
+var mailOptions = {
+  from: 'theahmadsharif@gmail.com',
+  to: 'theahmadsharif@gmail.com',
+  subject: 'Sending Email using Node.js',
+  text: 'That was easy!'
+};
+
+transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Email sent: ' + info.response);
+  }
+});
+
+
+
+put your gmail username and password
+
+
+source: https://nodemailer.com/smtp/
+
+
+
+
+
+
+
+
