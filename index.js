@@ -1,6 +1,10 @@
-var a = require('./module_a');
-require('./module_b');
+var event = require('events').EventEmitter;
 
+var a = new event;
 
-console.log(a.name);
-console.log(a.getPrivate());
+a.on('functionName', function() {
+    console.log('Event called');
+})
+
+a.emit('functionName')
+
