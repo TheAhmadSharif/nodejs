@@ -1,10 +1,21 @@
-var event = require('events').EventEmitter;
+var fs = require('fs');
 
-var a = new event;
+fs.readdir(__dirname, function (err, files) {
+  console.log(files);
+});
 
-a.on('functionName', function() {
-    console.log('Event called');
-})
+fs.readFile('data.txt', function(err, data) {
+    console.log(data.toString(), 'Data');
+  });
 
-a.emit('functionName')
 
+
+fs.writeFile('data_1.txt', 'This is my text', function (err) {
+  if (err) throw err;
+  console.log('Replaced!');
+});
+
+
+// Synchronous read
+var data = fs.readFileSync('data.txt');
+console.log("Synchronous read: " + data.toString())
