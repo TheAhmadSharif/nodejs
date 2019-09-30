@@ -92,3 +92,6 @@ source: https://nodemailer.com/smtp/
 GridFS
 ——————————————————————————————————————————————————————————————————————————————
 https://mongodb.github.io/node-mongodb-native/3.0/tutorials/gridfs/streaming/
+
+db.fs.chunks.find()
+db.fs.files.find()
