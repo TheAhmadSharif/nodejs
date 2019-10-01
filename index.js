@@ -1,34 +1,54 @@
-const fs = require('fs');
-const mongodb = require('mongodb');
-const uri = 'mongodb://localhost:27017';
-const client = new mongodb.MongoClient(uri);
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/Student', { useUnifiedTopology: true, useNewUrlParser: true });
 
+const db = mongoose.connection;
 
-client.connect((err)=> {
-	var db = client.db("gridFSdb");
-	var bucket = new mongodb.GridFSBucket(db);
+db.on('error', ()=> {
+	console.log(error);
+})
 
-	/*fs.createReadStream('./6.jpg').
-		pipe(bucket.openUploadStream('asdasdlkm.jpg')).
-		on('error', (error) => {
-			console.log(error);
-		}).
-		on('finish', () => {
-			console.log('done');
-			process.exit(0);
-		})*/;
+db.on('open', ()=> {
+	// console.log('success');
+})
 
-	bucket.openDownloadStreamByName('asdasdlkm.jpg').
-	  pipe(fs.createWriteStream('./alskjdkd.jpg')).
-	  on('error', function(error) {
-	    assert.ifError(error);
-	  }).
-	  on('end', function() {
-	    console.log('done!');
-	    process.exit(0);
-	  });
-
-
-
-
+const StudentSchema = mongoose.Schema({
+	name: String,
+	age: Number
 });
+
+const dbModel = mongoose.model("student", StudentSchema); // Collection Creation
+
+
+
+/* Mongoose Find */
+dbModel.find({"_id" : "5d9371cc4f552502c86e2aab"}, (error, success) => {
+	console.log(success);
+	if (error) {
+		console.log(error);
+	}
+})
+
+
+
+/* Mongoose Delete */
+dbModel.deleteOne({"_id" : "5d9371cc4f552502c86e2aab"}, (error, success) => {
+	if (error) {
+		console.log(error);
+	}
+	else {
+		console.log(success);
+	}
+})
+
+
+const StudentDocument = new dbModel({ name: "AhmadSharif", age: 24});
+
+
+/* Mongoose Insert */
+
+StudentDocument.save((error, success) => {
+	console.log(success);
+	if (error) {
+		console.log(error);
+	}
+})
