@@ -1,23 +1,14 @@
-const express = require('express');
-const app = express();
-
-const fs = require('fs');
-const jwt = require('jsonwebtoken');
-
-
-const secretKey = 'helloWorld';
-
-var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiZm9vYmFyIiwiaWF0IjoxNTcwMDAxODU1LCJleHAiOjE1NzAwMDIxNTV9.DNeOfHjlPVYp7q75rgcCT1GinukfJeWk1kjJFYYpFc4';
-
-/*jwt.sign({
-  data: 'foobar'
-}, secretKey, { expiresIn: 60 * 5 }, (error, token) => {
-	console.log(token);
-});
-*/
+const crypto = require('crypto');  
+const secret = 'sefsfasfafffffffff';  
+const hash = crypto.createHmac('sha256', secret)  
+                   .update('onetwo34.;')  
+                   .digest('hex');  
+console.log(hash);  
 
 
 
-jwt.verify(token, secretKey, function(err, decoded) {
-  console.log(decoded) // bar
-});
+
+const cipher = crypto.createCipher('aes192', 'a password');  
+var encrypted = cipher.update('Hello JavaTpoint', 'utf8', 'hex');  
+encrypted =  encrypted + cipher.final('hex');  
+console.log(encrypted);
