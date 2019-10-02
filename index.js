@@ -1,54 +1,23 @@
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/Student', { useUnifiedTopology: true, useNewUrlParser: true });
+const express = require('express');
+const app = express();
 
-const db = mongoose.connection;
+const fs = require('fs');
+const jwt = require('jsonwebtoken');
 
-db.on('error', ()=> {
-	console.log(error);
-})
 
-db.on('open', ()=> {
-	// console.log('success');
-})
+const secretKey = 'helloWorld';
 
-const StudentSchema = mongoose.Schema({
-	name: String,
-	age: Number
+var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiZm9vYmFyIiwiaWF0IjoxNTcwMDAxODU1LCJleHAiOjE1NzAwMDIxNTV9.DNeOfHjlPVYp7q75rgcCT1GinukfJeWk1kjJFYYpFc4';
+
+/*jwt.sign({
+  data: 'foobar'
+}, secretKey, { expiresIn: 60 * 5 }, (error, token) => {
+	console.log(token);
 });
-
-const dbModel = mongoose.model("student", StudentSchema); // Collection Creation
-
-
-
-/* Mongoose Find */
-dbModel.find({"_id" : "5d9371cc4f552502c86e2aab"}, (error, success) => {
-	console.log(success);
-	if (error) {
-		console.log(error);
-	}
-})
+*/
 
 
 
-/* Mongoose Delete */
-dbModel.deleteOne({"_id" : "5d9371cc4f552502c86e2aab"}, (error, success) => {
-	if (error) {
-		console.log(error);
-	}
-	else {
-		console.log(success);
-	}
-})
-
-
-const StudentDocument = new dbModel({ name: "AhmadSharif", age: 24});
-
-
-/* Mongoose Insert */
-
-StudentDocument.save((error, success) => {
-	console.log(success);
-	if (error) {
-		console.log(error);
-	}
-})
+jwt.verify(token, secretKey, function(err, decoded) {
+  console.log(decoded) // bar
+});
